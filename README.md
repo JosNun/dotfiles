@@ -10,10 +10,6 @@ project, but if you find something useful, great!
 ```sh
   # Clone the repo 
   git clone https://github.com/josnun/dotfile 
-  
-  # OR, if you don't have get, you can curl or wget it as well
-  # curl clone https://github.com/josnun/dotfile 
-  # wget clone https://github.com/josnun/dotfile 
 
   # Change to the cloned directory
   cd ~/dotfiles
