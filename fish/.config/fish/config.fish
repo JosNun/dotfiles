@@ -4,6 +4,8 @@ alias gst="git status"
 alias gl="git log"
 alias glo="git log --oneline"
 alias glog="git log --oneline --graph"
+alias unmerged="git branch -a  --sort=-committerdate --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))' --no-merge"
+
 
 set fish_user_paths (npm bin)
 
