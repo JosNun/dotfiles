@@ -1,0 +1,46 @@
+export EDITOR='nvim'
+
+if [ -f ~/.secrets ]; then
+	source ~/.secrets
+fi
+
+export RUN_PKGSITE_WITH_VSCODE=1
+export RUN_SLOW_GO_TESTS_ON_PRE_PUSH=1
+
+export VOLTA_HOME="$HOME/.volta"
+
+# Prepend...
+path=("$VOLTA_HOME/bin" $path)
+path=("/usr/local/bin" $path)
+path=("$HOME/.local/bin" $path)
+
+# Append
+path+=("$HOME/.lmstudio/bin")
+path+=("$HOME/go/bin")
+path+=("$HOME/google-cloud-sdk/bin")
+path+=("$HOME/.cache/node/corepack")
+path+=("$HOME/.orbstack/bin")
+path+=("/opt/homebrew/opt/python/libexec/bin")
+path+=("$HOME/Library/Python/3.11/bin")
+path+=("/opt/homebrew/bin")
+
+export HOMEBREW_PREFIX="/opt/homebrew"
+export HOMEBREW_CELLAR="/opt/homebrew/Cellar"
+export HOMEBREW_REPOSITORY="/opt/homebrew"
+
+# TKinter stuff for python
+export LDFLAGS="-L/opt/homebrew/opt/tcl-tk/lib"
+export CPPFLAGS="-I/opt/homebrew/opt/tcl-tk/include"
+export PKG_CONFIG_PATH="/opt/homebrew/opt/tcl-tk/lib/pkgconfig"
+
+eval "$(starship init zsh)"
+eval "$(zoxide init zsh)"
+eval "$(atuin init zsh)"
+
+source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/josiahnunemaker/.lmstudio/bin"
+# End of LM Studio CLI section
+

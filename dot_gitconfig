@@ -1,0 +1,12 @@
+[user]
+	name = Josiah Nunemaker
+	email = josiah.nunemaker@gmail.com
+[pull]
+	rebase = true
+[http]
+	postBuffer = 157286400
+[alias]
+	publish = push origin HEAD --force-with-lease
+	pub = publish
+[diff]
+	algorithm = histogram
