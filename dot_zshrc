@@ -4,6 +4,8 @@ if [ -f ~/.secrets ]; then
 	source ~/.secrets
 fi
 
+export XDG_CONFIG_HOME="$HOME/.config"
+
 export RUN_PKGSITE_WITH_VSCODE=1
 export RUN_SLOW_GO_TESTS_ON_PRE_PUSH=1
 
