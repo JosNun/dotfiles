@@ -1,0 +1,36 @@
+# Dockerfile.fedora
+# Test chezmoi dotfiles installation on Fedora
+
+FROM fedora:latest
+
+# Install basic dependencies
+RUN dnf install -y \
+    curl \
+    git \
+    sudo \
+    findutils \
+    && dnf clean all
+
+# Create a non-root user for testing
+RUN useradd -m -s /bin/bash testuser && \
+    echo "testuser ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+
+# Switch to test user
+USER testuser
+WORKDIR /home/testuser
+
+# Install chezmoi
+RUN sh -c "$(curl -fsLS get.chezmoi.io)" -- -b /home/testuser/.local/bin
+
+# Add chezmoi to PATH
+ENV PATH="/home/testuser/.local/bin:${PATH}"
+
+# Copy dotfiles into the container
+# This will be mounted at runtime, but we set up the directory structure
+RUN mkdir -p /home/testuser/dotfiles
+
+# Set the entrypoint to test the installation
+COPY --chown=testuser:testuser test-entrypoint.sh /home/testuser/
+RUN chmod +x /home/testuser/test-entrypoint.sh
+
+ENTRYPOINT ["/home/testuser/test-entrypoint.sh"]

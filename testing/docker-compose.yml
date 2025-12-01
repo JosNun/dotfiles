@@ -1,0 +1,68 @@
+# docker-compose.yml
+# Test chezmoi dotfiles installation across multiple Linux distributions
+#
+# Usage:
+#   Test all distros:     docker-compose up
+#   Test specific distro: docker-compose up ubuntu
+#   Rebuild and test:     docker-compose up --build
+#   Clean up:             docker-compose down
+
+
+services:
+  # Ubuntu/Debian-based testing
+  ubuntu:
+    build:
+      context: .
+      dockerfile: Dockerfile.ubuntu
+    image: chezmoi-test-ubuntu
+    container_name: chezmoi-ubuntu-test
+    volumes:
+      # Mount the parent directory (dotfiles repo) as /dotfiles in the container
+      - ..:/dotfiles:ro
+    environment:
+      - TERM=xterm-256color
+    stdin_open: true
+    tty: true
+
+  # Arch Linux testing
+  arch:
+    platform: linux/amd64
+    build:
+      context: .
+      dockerfile: Dockerfile.arch
+    image: chezmoi-test-arch
+    container_name: chezmoi-arch-test
+    volumes:
+      - ..:/dotfiles:ro
+    environment:
+      - TERM=xterm-256color
+    stdin_open: true
+    tty: true
+
+  # Fedora testing
+  fedora:
+    build:
+      context: .
+      dockerfile: Dockerfile.fedora
+    image: chezmoi-test-fedora
+    container_name: chezmoi-fedora-test
+    volumes:
+      - ..:/dotfiles:ro
+    environment:
+      - TERM=xterm-256color
+    stdin_open: true
+    tty: true
+
+  # Alpine with Homebrew testing
+  alpine:
+    build:
+      context: .
+      dockerfile: Dockerfile.alpine
+    image: chezmoi-test-alpine
+    container_name: chezmoi-alpine-test
+    volumes:
+      - ..:/dotfiles:ro
+    environment:
+      - TERM=xterm-256color
+    stdin_open: true
+    tty: true
