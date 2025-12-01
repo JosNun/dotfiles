@@ -151,6 +151,22 @@ install_lazygit_special() {
     esac
 }
 
+install_starship_special() {
+    local pm=$1
+
+    case $pm in
+        dnf)
+            # Enable COPR repository for starship on Fedora
+            sudo dnf copr enable -y atim/starship &> /dev/null || return 1
+            sudo dnf install -y starship &> /dev/null || return 1
+            return 0
+            ;;
+        *)
+            return 1
+            ;;
+    esac
+}
+
 # Main installation logic
 main() {
     # Detect package manager
@@ -201,6 +217,11 @@ main() {
         # Try special installation methods
         if [[ "$pkg" == "lazygit" ]] && install_lazygit_special "$PKG_MANAGER"; then
             echo -e "${CHECK_MARK} (from GitHub)"
+            continue
+        fi
+
+        if [[ "$pkg" == "starship" ]] && install_starship_special "$PKG_MANAGER"; then
+            echo -e "${CHECK_MARK} (from COPR)"
             continue
         fi
 
