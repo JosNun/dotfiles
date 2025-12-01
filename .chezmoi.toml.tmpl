@@ -1,0 +1,45 @@
+{{- $osid := .chezmoi.os -}}
+{{- if hasKey .chezmoi.osRelease "id" -}}
+{{-   $osid = printf "%s-%s" .chezmoi.os .chezmoi.osRelease.id -}}
+{{- end -}}
+
+[data]
+    # OS identification
+    osid = {{ $osid | quote }}
+
+    # Define essential packages to install across all systems
+    [data.packages]
+        essential = [
+            "zsh",
+            "git",
+            "neovim",
+            "bat",
+            "zoxide",
+            "lazygit",
+            "fzf",
+            "ripgrep"
+        ]
+
+    # Package name mappings for different package managers
+    # Some packages have different names across distros
+    [data.package_mappings]
+        # Homebrew (macOS/Linux)
+        [data.package_mappings.brew]
+            neovim = "neovim"
+            bat = "bat"
+
+        # APT (Debian/Ubuntu)
+        [data.package_mappings.apt]
+            neovim = "neovim"
+            bat = "bat"  # On older Ubuntu, might be "batcat"
+            lazygit = ""  # Not in standard repos, handled specially
+
+        # Pacman (Arch Linux)
+        [data.package_mappings.pacman]
+            neovim = "neovim"
+            bat = "bat"
+
+        # DNF (Fedora)
+        [data.package_mappings.dnf]
+            neovim = "neovim"
+            bat = "bat"
