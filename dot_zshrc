@@ -42,6 +42,11 @@ eval "$(atuin init zsh)"
 source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
+# Load aliases
+if [ -f ~/.zsh_aliases ]; then
+    source ~/.zsh_aliases
+fi
+
 # Added by LM Studio CLI (lms)
 export PATH="$PATH:/Users/josiahnunemaker/.lmstudio/bin"
 # End of LM Studio CLI section

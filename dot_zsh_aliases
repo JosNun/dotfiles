@@ -1,0 +1,4 @@
+# Zsh Aliases
+
+# Git tools
+alias lg='lazygit'
