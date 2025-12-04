@@ -21,6 +21,7 @@ path=("$HOME/.local/bin" $path)
 [[ -d "$HOME/go/bin" ]] && path+=("$HOME/go/bin")
 [[ -d "$HOME/google-cloud-sdk/bin" ]] && path+=("$HOME/google-cloud-sdk/bin")
 [[ -d "$HOME/.cache/node/corepack" ]] && path+=("$HOME/.cache/node/corepack")
+[[ -d "$HOME/.antigravity/antigravity/bin" ]] && path+=("$HOME/.antigravity/antigravity/bin")
 
 # macOS-specific paths
 if [[ "$OSTYPE" == "darwin"* ]]; then
@@ -53,4 +54,3 @@ fi
 if [ -f ~/.zsh_aliases ]; then
     source ~/.zsh_aliases
 fi
-
