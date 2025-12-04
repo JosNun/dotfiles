@@ -16,38 +16,41 @@ path=("$VOLTA_HOME/bin" $path)
 path=("/usr/local/bin" $path)
 path=("$HOME/.local/bin" $path)
 
-# Append
-path+=("$HOME/.lmstudio/bin")
-path+=("$HOME/go/bin")
-path+=("$HOME/google-cloud-sdk/bin")
-path+=("$HOME/.cache/node/corepack")
-path+=("$HOME/.orbstack/bin")
-path+=("/opt/homebrew/opt/python/libexec/bin")
-path+=("$HOME/Library/Python/3.11/bin")
-path+=("/opt/homebrew/bin")
+# Append (conditional - only if directory exists)
+[[ -d "$HOME/.lmstudio/bin" ]] && path+=("$HOME/.lmstudio/bin")
+[[ -d "$HOME/go/bin" ]] && path+=("$HOME/go/bin")
+[[ -d "$HOME/google-cloud-sdk/bin" ]] && path+=("$HOME/google-cloud-sdk/bin")
+[[ -d "$HOME/.cache/node/corepack" ]] && path+=("$HOME/.cache/node/corepack")
 
-export HOMEBREW_PREFIX="/opt/homebrew"
-export HOMEBREW_CELLAR="/opt/homebrew/Cellar"
-export HOMEBREW_REPOSITORY="/opt/homebrew"
+# macOS-specific paths
+if [[ "$OSTYPE" == "darwin"* ]]; then
+	[[ -d "$HOME/.orbstack/bin" ]] && path+=("$HOME/.orbstack/bin")
+	[[ -d "/opt/homebrew/opt/python/libexec/bin" ]] && path+=("/opt/homebrew/opt/python/libexec/bin")
+	[[ -d "$HOME/Library/Python/3.11/bin" ]] && path+=("$HOME/Library/Python/3.11/bin")
+	[[ -d "/opt/homebrew/bin" ]] && path+=("/opt/homebrew/bin")
 
-# TKinter stuff for python
-export LDFLAGS="-L/opt/homebrew/opt/tcl-tk/lib"
-export CPPFLAGS="-I/opt/homebrew/opt/tcl-tk/include"
-export PKG_CONFIG_PATH="/opt/homebrew/opt/tcl-tk/lib/pkgconfig"
+	export HOMEBREW_PREFIX="/opt/homebrew"
+	export HOMEBREW_CELLAR="/opt/homebrew/Cellar"
+	export HOMEBREW_REPOSITORY="/opt/homebrew"
+
+	# TKinter stuff for python
+	export LDFLAGS="-L/opt/homebrew/opt/tcl-tk/lib"
+	export CPPFLAGS="-I/opt/homebrew/opt/tcl-tk/include"
+	export PKG_CONFIG_PATH="/opt/homebrew/opt/tcl-tk/lib/pkgconfig"
+fi
 
 eval "$(starship init zsh)"
 eval "$(zoxide init zsh)"
 eval "$(atuin init zsh)"
 
-source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# macOS-specific zsh plugins (via Homebrew)
+if [[ "$OSTYPE" == "darwin"* ]]; then
+	source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+	source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+fi
 
 # Load aliases
 if [ -f ~/.zsh_aliases ]; then
     source ~/.zsh_aliases
 fi
-
-# Added by LM Studio CLI (lms)
-export PATH="$PATH:/Users/josiahnunemaker/.lmstudio/bin"
-# End of LM Studio CLI section
 
