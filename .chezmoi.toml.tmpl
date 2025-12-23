@@ -18,7 +18,8 @@
             "lazygit",
             "fzf",
             "ripgrep",
-            "starship"
+            "starship",
+            "git-delta"
         ]
 
     # Package name mappings for different package managers
@@ -44,3 +45,9 @@
         [data.package_mappings.dnf]
             neovim = "neovim"
             bat = "bat"
+
+        # APK (Alpine Linux)
+        [data.package_mappings.apk]
+            neovim = "neovim"
+            bat = "bat"
+            git-delta = ""  # Not in apk repos, uses Homebrew instead
