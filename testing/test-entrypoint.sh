@@ -89,8 +89,9 @@ verify_command "zoxide" "zoxide" || ((FAILED_COUNT++))
 verify_command "lazygit" "lazygit" || ((FAILED_COUNT++))
 verify_command "fzf" "fzf" || ((FAILED_COUNT++))
 verify_command "rg" "ripgrep" || ((FAILED_COUNT++))
-verify_command_alt "fd" "fd" "fdfind" || ((FAILED_COUNT++))
-verify_command "eza" "eza" || ((FAILED_COUNT++))
+verify_command "starship" "starship" || ((FAILED_COUNT++))
+# git-delta is optional on Alpine (installation may fail on some platforms)
+verify_command "delta" "git-delta" || echo -e "  ${YELLOW}⚠${NC} git-delta optional (not installed)"
 
 # Summary
 echo -e "\n${BLUE}========================================${NC}"

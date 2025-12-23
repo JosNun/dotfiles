@@ -41,8 +41,35 @@ rebuild:
 # Test all distributions
 test:
 	@echo "Testing all distributions..."
-	@docker-compose up --abort-on-container-exit
-	@$(MAKE) --no-print-directory clean-containers
+	@echo ""
+	@FAILED=""; \
+	PASSED=""; \
+	for dist in ubuntu arch fedora alpine; do \
+		echo "========================================"; \
+		echo "Testing $$dist..."; \
+		echo "========================================"; \
+		if docker-compose up --build --exit-code-from $$dist $$dist 2>&1; then \
+			echo "✓ $$dist: PASSED"; \
+			PASSED="$$PASSED $$dist"; \
+		else \
+			echo "✗ $$dist: FAILED"; \
+			FAILED="$$FAILED $$dist"; \
+		fi; \
+		docker-compose down 2>/dev/null || true; \
+		echo ""; \
+	done; \
+	echo "========================================"; \
+	echo "Test Summary"; \
+	echo "========================================"; \
+	if [ -n "$$PASSED" ]; then \
+		echo "✓ Passed:$$PASSED"; \
+	fi; \
+	if [ -n "$$FAILED" ]; then \
+		echo "✗ Failed:$$FAILED"; \
+		exit 1; \
+	else \
+		echo "All tests passed!"; \
+	fi
 
 # Test Ubuntu
 ubuntu:
