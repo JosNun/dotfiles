@@ -5,6 +5,7 @@ if [ -f ~/.secrets ]; then
 fi
 
 export XDG_CONFIG_HOME="$HOME/.config"
+export CLAUDE_CODE_NO_FLICKER=1
 
 export RUN_PKGSITE_WITH_VSCODE=1
 export RUN_SLOW_GO_TESTS_ON_PRE_PUSH=1
